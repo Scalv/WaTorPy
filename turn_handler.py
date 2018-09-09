@@ -18,14 +18,10 @@ class TurnHandler():
                 self.map.remove_shark(shark)
                 continue
 
-            # rewrite long list comprehension?
-            # def check_fish(f):
-            #     if self.map.check_space_has_icon(x, constants.FISH_ICON):
-            #         return f
-            surrounding_fish = [x for x in shark.surrounding_tiles if self.map.check_space_has_icon(x, constants.FISH_ICON)]
-            # for i in shark.surrounding_tiles:
-            #     if self.map.check_space_has_icon(i, constants.FISH_ICON):
-            #         surrounding_fish.append(i)
+            surrounding_fish = []
+            for i in shark.surrounding_tiles:
+                if self.map.check_space_has_icon(i, constants.FISH_ICON):
+                    surrounding_fish.append(i)
 
             invalid_moves = self._get_invalid_moves(shark)
             self.shark_move(shark, invalid_moves, surrounding_fish)
@@ -33,16 +29,19 @@ class TurnHandler():
 
 
     def shark_move(self, shark, inv, s_fish):
-        move = shark.move(inv, s_fish)
-        if ((self.map.check_space_empty(move)
-              or self.map.check_space_has_icon(move, constants.FISH_ICON)) and
-              not self.map.check_space_has_icon(move, constants.SHARK_ICON)
-              and move is not None):
+        if len(s_fish) > 0:
+            move = shark.move_to_fish(s_fish)
             if self.map.check_space_has_icon(move, constants.FISH_ICON):
-                shark.confirm_move(True)
                 self.map.kill_fish_at_coords(move)
-            else:
-                shark.confirm_move(False)
+                shark.confirm_move(True)
+        else:
+            while True:
+                move = shark.move(inv)
+                if move is None:
+                    break
+                if self.map.check_space_empty(move):
+                    shark.confirm_move(False)
+                    break
         self.map.update_map()
 
     def fish_step(self):

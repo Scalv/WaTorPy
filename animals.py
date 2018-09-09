@@ -4,7 +4,6 @@ import constants
 #                              N       S        W       E
 SURROUNDING_TILE_OFFSETS = [[0, -1], [0, 1], [-1, 0], [1, 0]]
 
-#surrounding tiles for both (fish check if can move)
 class Animal():
     coords = []
     potential_move = []
@@ -78,16 +77,19 @@ class Shark(Animal):
     def __init__(self, coords):
         super().__init__(coords)
 
-    # moving twice in one turn sometimes
-    def move(self, invalid_moves, surrounding_fish):
+    def move(self, invalid_moves):
         super()._update_surrounding_tiles()
-        if len(surrounding_fish) > 0:
-            move = surrounding_fish[random.randint(0, len(surrounding_fish) - 1)]
-        else:
-            random_move = super()._random_move(invalid_moves)
-            if random_move == None:
-                return None
-            move = [self.coords[0] - random_move[0], self.coords[1] - random_move[1]]
+        random_move = super()._random_move(invalid_moves)
+        if random_move == None:
+            return None
+        move = [self.coords[0] - random_move[0], self.coords[1] - random_move[1]]
+        print(move)
+        self.potential_move = super()._wrap_around(move)
+        return self.potential_move
+
+    def move_to_fish(self, surrounding_fish):
+        super()._update_surrounding_tiles()
+        move = surrounding_fish[random.randint(0, len(surrounding_fish) - 1)]
         self.potential_move = super()._wrap_around(move)
         return self.potential_move
 
@@ -101,6 +103,7 @@ class Shark(Animal):
             self.age = 0
         self.coords = self.potential_move
         self.potential_move = []
+        super()._update_surrounding_tiles()
 
 
 class AnimalFactory():

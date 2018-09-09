@@ -12,5 +12,5 @@ if __name__ == "__main__":
     factory.spawn_fish()
 
     turns = TurnHandler(map)
-    for i in range(4):
+    for i in range(21):
         turns.step()
