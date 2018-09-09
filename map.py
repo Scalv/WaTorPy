@@ -40,6 +40,9 @@ class Map():
     def add_shark(self, shark):
         self.sharks.append(shark)
 
+    def remove_shark(self, shark):
+        self.sharks.remove(shark)
+
     def check_space_empty(self, coords):
         if self.map[coords[1]][coords[0]] == 0:
             return True
@@ -49,6 +52,11 @@ class Map():
         if self.map[coords[1]][coords[0]] == icon:
             return True
         return False
+
+    def kill_fish_at_coords(self, coords):
+        for f in self.fish:
+            if f.coords == coords:
+                self.fish.remove(f)
 
     def draw_from_list(self, list, icon):
         for a in list:

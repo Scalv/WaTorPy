@@ -13,6 +13,7 @@ class Animal():
 
     def __init__(self, coords):
         self.coords = coords
+        self._update_surrounding_tiles()
 
     def _random_move(self, invalid_moves):
         moves = [x for x in SURROUNDING_TILE_OFFSETS if x not in invalid_moves]
@@ -30,10 +31,6 @@ class Animal():
             move[1] = wrap_around_h[move[1]]
 
         return move
-
-    def confirm_move(self):
-        self.coords = self.potential_move
-        self.potential_move = []
 
     def step_age(self):
         self.age += 1
@@ -71,11 +68,39 @@ class Fish(Animal):
         self.age = 0
         return Fish(self.coords)
 
+    def confirm_move(self):
+        self.coords = self.potential_move
+        self.potential_move = []
+
 class Shark(Animal):
     icon = constants.SHARK_ICON
 
     def __init__(self, coords):
         super().__init__(coords)
+
+    # moving twice in one turn sometimes
+    def move(self, invalid_moves, surrounding_fish):
+        super()._update_surrounding_tiles()
+        if len(surrounding_fish) > 0:
+            move = surrounding_fish[random.randint(0, len(surrounding_fish) - 1)]
+        else:
+            random_move = super()._random_move(invalid_moves)
+            if random_move == None:
+                return None
+            move = [self.coords[0] - random_move[0], self.coords[1] - random_move[1]]
+        self.potential_move = super()._wrap_around(move)
+        return self.potential_move
+
+    def check_death(self):
+        if self.age >= constants.SHARK_STEPS_TO_DIE + 1:
+            return True
+        return False
+
+    def confirm_move(self, ate):
+        if ate:
+            self.age = 0
+        self.coords = self.potential_move
+        self.potential_move = []
 
 
 class AnimalFactory():
