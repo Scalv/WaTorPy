@@ -4,6 +4,7 @@ from map import Map
 import constants
 from turn_handler import TurnHandler
 
+
 if __name__ == "__main__":
     map = Map(constants.MAP_HEIGHT, constants.MAP_WIDTH)
 
@@ -13,4 +14,3 @@ if __name__ == "__main__":
     turns = TurnHandler(map)
     for i in range(8):
         turns.step()
-        map.print_map()

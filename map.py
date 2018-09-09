@@ -45,8 +45,8 @@ class Map():
             return True
         return False
 
-    def check_space_has_fish(self, coords):
-        if self.map[coords[1]][coords[0]] == constants.FISH_ICON:
+    def check_space_has_icon(self, coords, icon):
+        if self.map[coords[1]][coords[0]] == icon:
             return True
         return False
 
