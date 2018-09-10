@@ -4,6 +4,7 @@ from tkinter import ttk
 class Config():
     def __init__(self, master):
         self.master = master
+        self.world_window = None
         self.mainframe = ttk.Frame(self.master, padding="3 3 12 12")
         self.mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
         self.mainframe.columnconfigure(0, weight=1)
@@ -47,8 +48,31 @@ class Config():
 
         ttk.Button(self.mainframe, text="Submit", command=self.submit).grid(column=2, row=8, sticky=W)
 
+
+    # NUM_FISH = 80
+    # FISH_STEPS_TO_BREED = 20
+    #
+    # NUM_SHARKS = 4
+    # SHARK_STEPS_TO_DIE = 10
+    #
+    # MAP_HEIGHT = 20
+    # MAP_WIDTH = 20
     def submit(self):
-        pass
-    # def new_window(self):
-    #     self.newWindow = tk.Toplevel(self.master)
-    #     self.app = Demo2(self.newWindow)
+        # stringvar.get()
+        print(int(self.height_set.get()))
+        # setters, input verification
+        #self.new_window()
+
+    def new_window(self):
+        self.new_window = Toplevel(self.master)
+        self.world_window = World(self.new_window)
+
+class World():
+    def __init__(self, master):
+        self.master = master
+        self.frame = Frame(self.master, padding="3 3 12 12")
+        self.frame.grid(column=0, row=0, sticky=(N, W, E, S))
+        self.frame.columnconfigure(0, weight=1)
+        self.frame.rowconfigure(0, weight=1)
+    def close_windows(self):
+        self.master.destroy()
