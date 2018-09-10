@@ -1,11 +1,13 @@
 import random
-import tkinter
+import tkinter as tk
 from tkinter import ttk
 
+from gui import Config
 from animals import Fish, Shark, AnimalFactory
 from map import Map
 import constants
 from turn_handler import TurnHandler
+
 
 
 if __name__ == "__main__":
@@ -18,10 +20,7 @@ if __name__ == "__main__":
     # for i in range(21):
     #     turns.step()
 
-    root = Tk()
+    root = tk.Tk()
     root.title("Config")
-
-    mainframe = ttk.Frame(root, padding="3 3 12 12")
-    mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
-    mainframe.columnconfigure(0, weight=1)
-    mainframe.rowconfigure(0, weight=1)
+    gooey = Config(root)
+    root.mainloop()
