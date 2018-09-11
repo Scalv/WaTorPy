@@ -9,7 +9,7 @@ class TurnHandler():
     def step(self):
         self._shark_step()
         self._fish_step()
-        self.print_formatted_map()
+        #self.print_formatted_map()
 
     def _shark_step(self):
         for shark in self.map.sharks:
@@ -18,25 +18,27 @@ class TurnHandler():
                 self.map.remove_shark(shark)
                 continue
 
-            surrounding_fish = []
-            for i in shark.surrounding_tiles:
-                if self.map.check_space_has_icon(i, constants.FISH_ICON):
-                    surrounding_fish.append(i)
-
+            surrounding_fish = self._check_surrounding_shark(shark)
             invalid_moves = self._get_invalid_moves(shark)
+
             self._shark_move(shark, invalid_moves, surrounding_fish)
 
+    def _check_surrounding_shark(self, shark):
+        fish = []
+        for i in shark.surrounding_tiles:
+            if self.map.check_space_has_icon(i, constants.FISH_ICON):
+                fish.append(i)
+        return fish
 
-
-    def _shark_move(self, shark, inv, s_fish):
-        if len(s_fish) > 0:
-            move = shark.move_to_fish(s_fish)
+    def _shark_move(self, shark, invalid, surrounding_fish):
+        if len(surrounding_fish) > 0:
+            move = shark.move_to_fish(surrounding_fish)
             if self.map.check_space_has_icon(move, constants.FISH_ICON):
                 self.map.kill_fish_at_coords(move)
                 shark.confirm_move(True)
         else:
             while True:
-                move = shark.move(inv)
+                move = shark.move(invalid)
                 if move is None:
                     break
                 if self.map.check_space_empty(move):
@@ -57,6 +59,7 @@ class TurnHandler():
 
     def _fish_move(self, fish):
         while True:
+            # infinite loop
             c = fish.move(self._get_invalid_moves(fish))
             if c is None:
                 break
