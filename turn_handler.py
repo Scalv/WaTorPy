@@ -9,7 +9,7 @@ class TurnHandler():
     def step(self):
         self._shark_step()
         self._fish_step()
-        #self.print_formatted_map()
+        self.print_formatted_map()
 
     def _shark_step(self):
         for shark in self.map.sharks:

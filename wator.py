@@ -17,7 +17,7 @@ if __name__ == "__main__":
     factory.spawn_fish()
 
     turns = TurnHandler(map)
-    for i in range(21):
+    for i in range(10):
         turns.step()
 
     # root = tk.Tk()

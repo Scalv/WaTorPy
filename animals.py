@@ -51,9 +51,11 @@ class Fish(Animal):
 
     def move(self, invalid_moves):
         super()._update_surrounding_tiles()
+
         random_move = super()._random_move(invalid_moves)
         if random_move == None:
             return None
+
         move = [self.coords[0] - random_move[0], self.coords[1] - random_move[1]]
         self.potential_move = super()._wrap_around(move)
         return self.potential_move
