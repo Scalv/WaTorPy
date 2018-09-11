@@ -1,6 +1,8 @@
 from tkinter import *
 from tkinter import ttk
 
+import constants
+
 class Config():
     def __init__(self, master):
         self.master = master
@@ -46,7 +48,15 @@ class Config():
         ttk.Label(self.mainframe, text="Num Sharks: ").grid(column=1, row=6, sticky=(W, E))
         ttk.Label(self.mainframe, text="Starvation time: ").grid(column=1, row=7, sticky=(W, E))
 
-        ttk.Button(self.mainframe, text="Submit", command=self.submit).grid(column=2, row=8, sticky=W)
+        ttk.Button(self.mainframe, text="Submit", command=self.submit).grid(column=2, row=8, sticky=W)for child in mainframe.winfo_children(): child.grid_configure(padx=5, pady=5)
+
+        # feet_entry.focus()
+        # root.bind('<Return>', calculate)
+        #
+        # for child in mainframe.winfo_children(): child.grid_configure(padx=5, pady=5)
+        #
+        # feet_entry.focus()
+        # root.bind('<Return>', calculate)
 
 
     # NUM_FISH = 80
@@ -60,6 +70,10 @@ class Config():
     def submit(self):
         # stringvar.get()
         print(int(self.height_set.get()))
+        # try:
+        #     constants.MAP_HEIGHT = int(self.height_set.get())
+        # except ValueError as e:
+        #     print(e)
         # setters, input verification
         #self.new_window()
 

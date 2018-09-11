@@ -11,16 +11,16 @@ from turn_handler import TurnHandler
 
 
 if __name__ == "__main__":
-    # map = Map(constants.MAP_HEIGHT, constants.MAP_WIDTH)
-    #
-    # factory = AnimalFactory(constants.NUM_FISH, constants.NUM_SHARKS, map)
-    # factory.spawn_fish()
-    #
-    # turns = TurnHandler(map)
-    # for i in range(21):
-    #     turns.step()
+    map = Map(constants.MAP_HEIGHT, constants.MAP_WIDTH)
 
-    root = tk.Tk()
-    root.title("Config")
-    gooey = Config(root)
-    root.mainloop()
+    factory = AnimalFactory(constants.NUM_FISH, constants.NUM_SHARKS, map)
+    factory.spawn_fish()
+
+    turns = TurnHandler(map)
+    for i in range(21):
+        turns.step()
+
+    # root = tk.Tk()
+    # root.title("Config")
+    # gooey = Config(root)
+    # root.mainloop()

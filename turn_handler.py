@@ -7,11 +7,11 @@ class TurnHandler():
         self.map = map
 
     def step(self):
-        self.shark_step()
-        self.fish_step()
+        self._shark_step()
+        self._fish_step()
         self.print_formatted_map()
 
-    def shark_step(self):
+    def _shark_step(self):
         for shark in self.map.sharks:
             shark.step_age()
             if shark.check_death():
@@ -24,11 +24,11 @@ class TurnHandler():
                     surrounding_fish.append(i)
 
             invalid_moves = self._get_invalid_moves(shark)
-            self.shark_move(shark, invalid_moves, surrounding_fish)
+            self._shark_move(shark, invalid_moves, surrounding_fish)
 
 
 
-    def shark_move(self, shark, inv, s_fish):
+    def _shark_move(self, shark, inv, s_fish):
         if len(s_fish) > 0:
             move = shark.move_to_fish(s_fish)
             if self.map.check_space_has_icon(move, constants.FISH_ICON):
@@ -44,18 +44,18 @@ class TurnHandler():
                     break
         self.map.update_map()
 
-    def fish_step(self):
+    def _fish_step(self):
         new_fish = []
         for fish in self.map.fish:
             fish.step_age()
             if fish.check_breed():
                 new_fish.append(fish.breed())
-            self.fish_move(fish)
+            self._fish_move(fish)
 
         for fish in new_fish:
             self.map.add_fish(fish)
 
-    def fish_move(self, fish):
+    def _fish_move(self, fish):
         while True:
             c = fish.move(self._get_invalid_moves(fish))
             if c is None:
