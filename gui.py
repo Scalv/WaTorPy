@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 
-import constants
+from settings import constants
 
 class Config():
     def __init__(self, master):
@@ -71,7 +71,7 @@ class Config():
         # stringvar.get()
         print(int(self.height_set.get()))
         # try:
-        #     constants.MAP_HEIGHT = int(self.height_set.get())
+        #     constants["MAP_HEIGHT"] = int(self.height_set.get())
         # except ValueError as e:
         #     print(e)
         # setters, input verification

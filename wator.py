@@ -6,7 +6,7 @@ import sys
 from gui import Config
 from animals import Fish, Shark, AnimalFactory
 from map import Map
-import constants
+from settings import constants
 from turn_handler import TurnHandler
 from cli import CLI
 

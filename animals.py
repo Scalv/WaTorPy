@@ -1,5 +1,5 @@
 import random
-import constants
+from settings import constants
 
 #                              N       S        W       E
 SURROUNDING_TILE_OFFSETS = [[0, -1], [0, 1], [-1, 0], [1, 0]]
@@ -21,8 +21,8 @@ class Animal():
         return None
 
     def _wrap_around(self, move):
-        wrap_around_h = {-1 : constants.MAP_HEIGHT - 1, constants.MAP_HEIGHT : 0}
-        wrap_around_w = {-1 : constants.MAP_WIDTH - 1, constants.MAP_WIDTH : 0}
+        wrap_around_h = {-1 : constants["MAP_HEIGHT"] - 1, constants["MAP_HEIGHT"] : 0}
+        wrap_around_w = {-1 : constants["MAP_WIDTH"] - 1, constants["MAP_WIDTH"] : 0}
 
         if move[0] in wrap_around_w.keys():
             move[0] = wrap_around_w[move[0]]
@@ -43,8 +43,8 @@ class Animal():
 
 
 class Fish(Animal):
-    icon = constants.FISH_ICON
-    steps_to_breed = constants.FISH_STEPS_TO_BREED
+    icon = constants["FISH_ICON"]
+    steps_to_breed = constants["FISH_STEPS_TO_BREED"]
 
     def __init__(self, coords):
         super().__init__(coords)
@@ -73,7 +73,7 @@ class Fish(Animal):
         self.potential_move = []
 
 class Shark(Animal):
-    icon = constants.SHARK_ICON
+    icon = constants["SHARK_ICON"]
 
     def __init__(self, coords):
         super().__init__(coords)
@@ -96,7 +96,7 @@ class Shark(Animal):
         return self.potential_move
 
     def check_death(self):
-        if self.age >= constants.SHARK_STEPS_TO_DIE + 1:
+        if self.age >= constants["SHARK_STEPS_TO_DIE"] + 1:
             return True
         return False
 
@@ -127,5 +127,5 @@ class AnimalFactory():
                 fish[2](f)
 
     def get_random_coords(self):
-        return [random.randint(0, constants.MAP_WIDTH - 1),
-                random.randint(0, constants.MAP_HEIGHT - 1)]
+        return [random.randint(0, constants["MAP_WIDTH"] - 1),
+                random.randint(0, constants["MAP_HEIGHT"] - 1)]

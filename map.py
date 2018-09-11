@@ -1,4 +1,4 @@
-import constants
+from settings import constants
 
 class Map():
     def __init__(self, height, width):
@@ -20,7 +20,7 @@ class Map():
 
     def print_map(self):
         print("  ", end="")
-        for i in range(constants.MAP_WIDTH):
+        for i in range(constants["MAP_WIDTH"]):
             print(i, end="")
         print()
         c = 0
@@ -66,5 +66,5 @@ class Map():
     def update_map(self):
         # inefficient to do each time an animal moves, new function with animal instance passed?
         self.clear_map()
-        self.draw_from_list(self.fish, constants.FISH_ICON)
-        self.draw_from_list(self.sharks, constants.SHARK_ICON)
+        self.draw_from_list(self.fish, constants["FISH_ICON"])
+        self.draw_from_list(self.sharks, constants["SHARK_ICON"])

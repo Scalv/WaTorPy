@@ -2,7 +2,7 @@ import sys
 
 from animals import AnimalFactory
 from map import Map
-import constants
+from settings import constants, LOGO, PRINT_FRIENDLY
 from turn_handler import TurnHandler
 
 class CLI():
@@ -12,14 +12,14 @@ class CLI():
 
     def welcome(self):
         # explain simulation
-        print(constants.LOGO)
+        print(LOGO)
         self.print_constants()
         self.menu()
 
     def start(self):
-        map = Map(constants.MAP_HEIGHT, constants.MAP_WIDTH)
+        map = Map(constants["MAP_HEIGHT"], constants["MAP_WIDTH"])
 
-        factory = AnimalFactory(constants.NUM_FISH, constants.NUM_SHARKS, map)
+        factory = AnimalFactory(constants["NUM_FISH"], constants["NUM_SHARKS"], map)
         factory.spawn_fish()
 
         turns = TurnHandler(map)
@@ -53,7 +53,7 @@ class CLI():
         print("1 Start\n2 Change Constants\n3 Simulation Description\n4 Quit")
 
     def print_constants(self):
-        for k, v in constants.PRINT_FRIENDLY.items():
+        for k, v in PRINT_FRIENDLY.items():
             print(k.format(v))
 
     def quit(self):

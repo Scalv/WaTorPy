@@ -1,6 +1,6 @@
 from map import Map
 from animals import Fish, Shark
-import constants
+from settings import constants
 
 class TurnHandler():
     def __init__(self, map):
@@ -26,14 +26,14 @@ class TurnHandler():
     def _check_surrounding_shark(self, shark):
         fish = []
         for i in shark.surrounding_tiles:
-            if self.map.check_space_has_icon(i, constants.FISH_ICON):
+            if self.map.check_space_has_icon(i, constants["FISH_ICON"]):
                 fish.append(i)
         return fish
 
     def _shark_move(self, shark, invalid, surrounding_fish):
         if len(surrounding_fish) > 0:
             move = shark.move_to_fish(surrounding_fish)
-            if self.map.check_space_has_icon(move, constants.FISH_ICON):
+            if self.map.check_space_has_icon(move, constants["FISH_ICON"]):
                 self.map.kill_fish_at_coords(move)
                 shark.confirm_move(True)
         else:
@@ -66,17 +66,17 @@ class TurnHandler():
         self.map.update_map()
 
     def print_formatted_map(self):
-        print("-" * (constants.MAP_WIDTH + 2))
+        print("-" * (constants["MAP_WIDTH"] + 2))
         print("Fish Alive: {}".format(len(self.map.fish)))
         print("Sharks Alive: {}".format(len(self.map.sharks)))
         self.map.print_map()
-        print("-" * (constants.MAP_WIDTH + 2))
+        print("-" * (constants["MAP_WIDTH"] + 2))
 
     def _get_invalid_moves_fish(self, animal):
         invalid_moves = []
         for i in animal.surrounding_tiles:
-            if (self.map.check_space_has_icon(i, constants.SHARK_ICON)
-                    or self.map.check_space_has_icon(i, constants.FISH_ICON)):
+            if (self.map.check_space_has_icon(i, constants["SHARK_ICON"])
+                    or self.map.check_space_has_icon(i, constants["FISH_ICON"])):
                 invalid_coord = [animal.coords[0] - i[0], animal.coords[1] - i[1]]
                 invalid_moves.append(invalid_coord)
         return invalid_moves

@@ -1,3 +1,4 @@
 *.pyc
 venv
 tkintertest.py
+constants.py
