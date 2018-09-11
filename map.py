@@ -18,6 +18,13 @@ class Map():
         for i in range(len(self.map)):
             self.map[i] = [0 for x in range(self.width)]
 
+    def print_formatted_map(self):
+        print("-" * (constants["MAP_WIDTH"] + 2))
+        print("Fish Alive: {}".format(len(self.fish)))
+        print("Sharks Alive: {}".format(len(self.sharks)))
+        self.print_map()
+        print("-" * (constants["MAP_WIDTH"] + 2))
+
     def print_map(self):
         print("  ", end="")
         for i in range(constants["MAP_WIDTH"]):

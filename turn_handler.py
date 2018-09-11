@@ -9,7 +9,7 @@ class TurnHandler():
     def step(self):
         self._shark_step()
         self._fish_step()
-        self.print_formatted_map()
+        self.map.print_formatted_map()
 
     def _shark_step(self):
         for shark in self.map.sharks:
@@ -64,13 +64,6 @@ class TurnHandler():
         else:
             fish.confirm_move()
         self.map.update_map()
-
-    def print_formatted_map(self):
-        print("-" * (constants["MAP_WIDTH"] + 2))
-        print("Fish Alive: {}".format(len(self.map.fish)))
-        print("Sharks Alive: {}".format(len(self.map.sharks)))
-        self.map.print_map()
-        print("-" * (constants["MAP_WIDTH"] + 2))
 
     def _get_invalid_moves_fish(self, animal):
         invalid_moves = []

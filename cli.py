@@ -8,15 +8,14 @@ from turn_handler import TurnHandler
 class CLI():
     def __init__(self):
         pass
-        #self.factory = AnimalFactory()
 
     def welcome(self):
-        # explain simulation
         print(LOGO)
         self.print_constants()
         self.menu()
 
     def start(self):
+        # TODO autostep (time per step), step on enter pressed
         map = Map(constants["MAP_HEIGHT"], constants["MAP_WIDTH"])
 
         factory = AnimalFactory(constants["NUM_FISH"], constants["NUM_SHARKS"], map)
@@ -28,10 +27,31 @@ class CLI():
             turns.step()
 
     def change_constants(self):
-        pass
+        print("\nChanging Settings:\n  (B)egin\n  (D)efault\n  (M)enu")
+        choice = input()
+        if choice.lower() == "b":
+            self.get_constants()
+            self.menu()
+        elif choice.lower() == "d":
+            # TODO default constants
+            pass
+        elif choice.lower() == "m":
+            pass
+        else:
+            print("Please choose an option")
+            self.change_constants()
+        self.menu()
+
+
 
     def get_constants(self):
-        pass
+        for name, value in constants.items():
+            print("{}: Current: {} New: ".format(name.title().replace("_", " "), value), end="")
+            # TODO check inputs
+            if name in ["FISH_ICON", "SHARK_ICON"]:
+                constants[name] = input("")
+            else:
+                constants[name] = int(input(""))
 
     def description(self):
         pass
@@ -50,7 +70,7 @@ class CLI():
 
     def print_menu(self):
         print("\nMenu\n--------------")
-        print("1 Start\n2 Change Constants\n3 Simulation Description\n4 Quit")
+        print("1 Start\n2 Change Settings\n3 Simulation Description\n4 Quit")
 
     def print_constants(self):
         for k, v in PRINT_FRIENDLY.items():
