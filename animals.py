@@ -15,8 +15,6 @@ class Animal():
         self._update_surrounding_tiles()
 
     def _random_move(self, invalid_moves):
-        print("----------------")
-        print("Invalid: {}".format(invalid_moves))
         moves = [x for x in SURROUNDING_TILE_OFFSETS if x not in invalid_moves]
         if len(moves) > 0:
             return moves[random.randint(0, len(moves) - 1)]
@@ -53,16 +51,12 @@ class Fish(Animal):
 
     def move(self, invalid_moves):
         super()._update_surrounding_tiles()
-
         random_move = super()._random_move(invalid_moves)
-        print("Rand: {}".format(random_move))
         if random_move == None:
             return None
 
-        move = [self.coords[0] - random_move[0], self.coords[1] - random_move[1]]
+        move = [self.coords[0] + random_move[0], self.coords[1] + random_move[1]]
         self.potential_move = super()._wrap_around(move)
-        print("Move: {}".format(self.potential_move))
-        print("----------------")
         return self.potential_move
 
     def check_breed(self):
@@ -89,7 +83,7 @@ class Shark(Animal):
         random_move = super()._random_move(invalid_moves)
         if random_move == None:
             return None
-        move = [self.coords[0] - random_move[0], self.coords[1] - random_move[1]]
+        move = [self.coords[0] + random_move[0], self.coords[1] + random_move[1]]
         self.potential_move = super()._wrap_around(move)
         return self.potential_move
 

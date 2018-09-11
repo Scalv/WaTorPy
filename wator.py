@@ -18,6 +18,7 @@ if __name__ == "__main__":
 
     turns = TurnHandler(map)
     for i in range(10):
+        print("Step: {}".format(i))
         turns.step()
 
     # root = tk.Tk()

@@ -19,7 +19,7 @@ class TurnHandler():
                 continue
 
             surrounding_fish = self._check_surrounding_shark(shark)
-            invalid_moves = self._get_invalid_moves(shark)
+            invalid_moves = self._get_invalid_moves_shark(shark)
 
             self._shark_move(shark, invalid_moves, surrounding_fish)
 
@@ -58,26 +58,33 @@ class TurnHandler():
             self.map.add_fish(fish)
 
     def _fish_move(self, fish):
-        while True:
-            # infinite loop
-            c = fish.move(self._get_invalid_moves(fish))
-            if c is None:
-                break
-            if self.map.check_space_empty(c):
-                fish.confirm_move()
-                break
+        c = fish.move(self._get_invalid_moves_fish(fish))
+        if c is None:
+            return
+        else:
+            fish.confirm_move()
         self.map.update_map()
 
     def print_formatted_map(self):
         print("-" * (constants.MAP_WIDTH + 2))
-        print("Fish Alive: " + str(len(self.map.fish)))
-        print("Sharks Alive: " + str(len(self.map.sharks)))
+        print("Fish Alive: {}".format(len(self.map.fish)))
+        print("Sharks Alive: {}".format(len(self.map.sharks)))
         self.map.print_map()
         print("-" * (constants.MAP_WIDTH + 2))
 
-    def _get_invalid_moves(self, animal):
+    def _get_invalid_moves_fish(self, animal):
         invalid_moves = []
         for i in animal.surrounding_tiles:
-            if self.map.check_space_has_icon(i, animal.icon):
-                invalid_moves.append(i)
+            if (self.map.check_space_has_icon(i, constants.SHARK_ICON)
+                    or self.map.check_space_has_icon(i, constants.FISH_ICON)):
+                invalid_coord = [animal.coords[0] - i[0], animal.coords[1] - i[1]]
+                invalid_moves.append(invalid_coord)
+        return invalid_moves
+
+    def _get_invalid_moves_shark(self, animal):
+        invalid_moves = []
+        for i in animal.surrounding_tiles:
+            if (self.map.check_space_has_icon(i, animal.icon)):
+                invalid_coord = [animal.coords[0] - i[0], animal.coords[1] - i[1]]
+                invalid_moves.append(invalid_coord)
         return invalid_moves
