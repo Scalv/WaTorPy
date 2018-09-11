@@ -1,25 +1,27 @@
 import random
 import tkinter as tk
 from tkinter import ttk
+import sys
 
 from gui import Config
 from animals import Fish, Shark, AnimalFactory
 from map import Map
 import constants
 from turn_handler import TurnHandler
+from cli import CLI
 
-
+def command_line():
+    com = CLI()
+    com.welcome()
 
 if __name__ == "__main__":
-    map = Map(constants.MAP_HEIGHT, constants.MAP_WIDTH)
-
-    factory = AnimalFactory(constants.NUM_FISH, constants.NUM_SHARKS, map)
-    factory.spawn_fish()
-
-    turns = TurnHandler(map)
-    for i in range(10):
-        print("Step: {}".format(i))
-        turns.step()
+    if "-cli" and "-gui" in sys.argv:
+        print("Defaulting to cli")
+        command_line()
+    elif "-cli" in sys.argv:
+        command_line()
+    elif "-gui" in sys.argv:
+        pass
 
     # root = tk.Tk()
     # root.title("Config")
