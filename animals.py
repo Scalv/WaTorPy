@@ -83,7 +83,6 @@ class Shark(Animal):
         if random_move == None:
             return None
         move = [self.coords[0] - random_move[0], self.coords[1] - random_move[1]]
-        print(move)
         self.potential_move = super()._wrap_around(move)
         return self.potential_move
 

@@ -48,7 +48,7 @@ class Config():
         ttk.Label(self.mainframe, text="Num Sharks: ").grid(column=1, row=6, sticky=(W, E))
         ttk.Label(self.mainframe, text="Starvation time: ").grid(column=1, row=7, sticky=(W, E))
 
-        ttk.Button(self.mainframe, text="Submit", command=self.submit).grid(column=2, row=8, sticky=W)for child in mainframe.winfo_children(): child.grid_configure(padx=5, pady=5)
+        ttk.Button(self.mainframe, text="Submit", command=self.submit).grid(column=2, row=8, sticky=W)
 
         # feet_entry.focus()
         # root.bind('<Return>', calculate)
