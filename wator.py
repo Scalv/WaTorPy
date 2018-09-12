@@ -22,6 +22,8 @@ if __name__ == "__main__":
         command_line()
     elif "-gui" in sys.argv:
         pass
+    else:
+        command_line()
 
     # root = tk.Tk()
     # root.title("Config")
