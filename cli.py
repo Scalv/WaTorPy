@@ -2,7 +2,7 @@ import sys
 
 from animals import AnimalFactory
 from map import Map
-from settings import constants, LOGO, PRINT_FRIENDLY
+from settings import constants, LOGO, PRINT_FRIENDLY, defaults
 from turn_handler import TurnHandler
 
 class CLI():
@@ -33,8 +33,7 @@ class CLI():
             self.get_constants()
             self.menu()
         elif choice.lower() == "d":
-            # TODO default constants
-            pass
+            self.default_constants()
         elif choice.lower() == "m":
             pass
         else:
@@ -42,7 +41,9 @@ class CLI():
             self.change_constants()
         self.menu()
 
-
+    def default_constants(self):
+        for k, v in defaults.items():
+            constants[k] = v
 
     def get_constants(self):
         for name, value in constants.items():

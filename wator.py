@@ -10,6 +10,8 @@ from settings import constants
 from turn_handler import TurnHandler
 from cli import CLI
 
+# TODO extend readme
+
 def command_line():
     com = CLI()
     com.welcome()
