@@ -3,13 +3,18 @@ from animals import Fish, Shark
 from settings import constants
 
 class TurnHandler():
+    steps = 0
+
     def __init__(self, map):
         self.map = map
 
     def step(self):
+        self.steps += 1
+        print("Step: {}".format(self.steps))
         self._shark_step()
         self._fish_step()
         self.map.print_formatted_map()
+
 
     def _shark_step(self):
         for shark in self.map.sharks:

@@ -41,6 +41,20 @@ class Map():
                     print(j, end="")
             print("\n")
 
+    def print_animals(self, animal_list):
+        i = 0
+        for a in animal_list:
+            i += 1
+            print("{} {}".format(i, a.formatted_string()))
+
+    def print_fish(self):
+        print("Fish Alive:")
+        self.print_animals(self.fish)
+
+    def print_sharks(self):
+        print("Sharks Alive:")
+        self.print_animals(self.sharks)
+
     def add_fish(self, fish):
         self.fish.append(fish)
 

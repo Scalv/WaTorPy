@@ -1,4 +1,5 @@
 import sys
+import os
 
 from animals import AnimalFactory
 from map import Map
@@ -17,16 +18,39 @@ class CLI():
     def start(self):
         # TODO autostep (time per step), step on enter pressed
         map = Map(constants["MAP_HEIGHT"], constants["MAP_WIDTH"])
-
         factory = AnimalFactory(constants["NUM_FISH"], constants["NUM_SHARKS"], map)
         factory.spawn_fish()
-
         turns = TurnHandler(map)
-        for i in range(10):
-            print("Step: {}".format(i))
-            turns.step()
+
+        while True:
+            choice = self.step_menu()
+            choice_dict = {"s" : turns.step, "f" : map.print_fish,
+                           "h" : map.print_sharks, "q" : self.menu,
+                           }
+            if choice == "c":
+                self.clear_screen()
+                turns.step()
+            else:
+                choice_dict[choice]()
+
+    def step_menu(self):
+        print("| (S)tep | (C)lear Console and Step | (F)ish List | S(h)ark List | (Q)uit |")
+        choice = input("")
+        if choice.lower() in "csfhq":
+            return choice.lower()
+        else:
+            # print something to correct them
+            self.step_menu()
+
+    def clear_screen(self):
+        if os.name == 'nt':
+            _ = os.system('cls')
+        else:
+            _ = os.system('clear')
+
 
     def change_constants(self):
+        # TODO change this or menu to take either ints or letters, ubiquity
         print("\nChanging Settings:\n  (B)egin\n  (D)efault\n  (M)enu")
         choice = input()
         if choice.lower() == "b":
@@ -55,6 +79,7 @@ class CLI():
                 constants[name] = int(input(""))
 
     def description(self):
+        # TODO write rules and description
         pass
 
     def menu(self):

@@ -72,7 +72,11 @@ class Fish(Animal):
         self.coords = self.potential_move
         self.potential_move = []
 
+    def formatted_string(self):
+        return "Coords: ({}, {}) Age: {}".format(self.coords[0], self.coords[1], self.age)
+
 class Shark(Animal):
+    true_age = 0
     icon = constants["SHARK_ICON"]
 
     def __init__(self, coords):
@@ -96,6 +100,7 @@ class Shark(Animal):
         return self.potential_move
 
     def check_death(self):
+        self.true_age += 1
         if self.age >= constants["SHARK_STEPS_TO_DIE"] + 1:
             return True
         return False
@@ -106,6 +111,9 @@ class Shark(Animal):
         self.coords = self.potential_move
         self.potential_move = []
         super()._update_surrounding_tiles()
+
+    def formatted_string(self):
+        return "Coords: ({}, {}) Age: {}".format(self.coords[0], self.coords[1], self.true_age)
 
 
 class AnimalFactory():
