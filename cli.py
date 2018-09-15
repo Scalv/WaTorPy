@@ -1,5 +1,6 @@
 import sys
 import os
+import time
 
 from animals import AnimalFactory
 from map import Map
@@ -8,7 +9,11 @@ from turn_handler import TurnHandler
 
 class CLI():
     def __init__(self):
-        pass
+        self.auto_step_num_steps = 0
+        self.auto_step_time_between_steps = 1
+        self.auto_step_setup = False
+
+        self.turns = None
 
     def welcome(self):
         print(LOGO)
@@ -21,12 +26,15 @@ class CLI():
         factory = AnimalFactory(constants["NUM_FISH"], constants["NUM_SHARKS"], map)
         factory.spawn_fish()
         turns = TurnHandler(map)
+        self.turns = turns
 
         while True:
             choice = self.step_menu()
             choice_dict = {"s" : turns.step, "f" : map.print_fish,
                            "h" : map.print_sharks, "q" : self.menu,
+                           "a" : self.begin_auto_step, "u" : self.setup_auto_step,
                            }
+            # better way to handle this
             if choice == "c":
                 self.clear_screen()
                 turns.step()
@@ -34,13 +42,25 @@ class CLI():
                 choice_dict[choice]()
 
     def step_menu(self):
-        print("| (S)tep | (C)lear Console and Step | (F)ish List | S(h)ark List | (Q)uit |")
+        print("(A)uto Step | (S)tep | (C)lear Console and Step | (F)ish List | S(h)ark List | A(u)to Step Setup | (Q)uit |")
         choice = input("")
-        if choice.lower() in "csfhq":
+        if choice.lower() in "aucsfhq":
             return choice.lower()
         else:
             # print something to correct them
             self.step_menu()
+
+    def begin_auto_step(self):
+        if self.auto_step_setup:
+            for i in range(self.auto_step_num_steps):
+                self.clear_screen()
+                self.turns.step()
+                time.sleep(self.auto_step_time_between_steps)
+
+    def setup_auto_step(self):
+        self.auto_step_num_steps = int(input("Number of Steps: "))
+        self.auto_step_time_between_steps = float(input("Time Between Steps (seconds): "))
+        self.auto_step_setup = True
 
     def clear_screen(self):
         if os.name == 'nt':
