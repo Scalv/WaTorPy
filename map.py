@@ -7,7 +7,7 @@
     as [x, y] and interpret the map as [y][x] to avoid complications outside
     the class.
 
-    - Contains all animal references in the program.
+    - Contains all animal references in the program in lists.
 """
 
 from settings import constants

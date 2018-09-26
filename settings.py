@@ -1,3 +1,8 @@
+"""
+    Settings/Constants as well as default values for those settings.
+"""
+
+# TODO refactor to class
 constants = {"FISH_ICON" : "o", "SHARK_ICON" : "V",
              "NUM_FISH" : 3, "FISH_STEPS_TO_BREED" : 20,
              "NUM_SHARKS" : 1, "SHARK_STEPS_TO_DIE" : 10,
