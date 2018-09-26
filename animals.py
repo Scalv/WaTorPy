@@ -5,14 +5,12 @@ from settings import constants
 SURROUNDING_TILE_OFFSETS = [[0, -1], [0, 1], [-1, 0], [1, 0]]
 
 class Animal():
-    coords = []
-    potential_move = []
-    surrounding_tiles = []
-    age = 0
-
     def __init__(self, coords):
         self.coords = coords
         self._update_surrounding_tiles()
+        self.potential_move = []
+        self.surrounding_tiles = []
+        self.age = 0
 
     def _random_move(self, invalid_moves):
         moves = [x for x in SURROUNDING_TILE_OFFSETS if x not in invalid_moves]
@@ -76,11 +74,11 @@ class Fish(Animal):
         return "Coords: ({}, {}) Age: {}".format(self.coords[0], self.coords[1], self.age)
 
 class Shark(Animal):
-    true_age = 0
     icon = constants["SHARK_ICON"]
 
     def __init__(self, coords):
         super().__init__(coords)
+        self.true_age = 0
 
     def move(self, invalid_moves):
         super()._update_surrounding_tiles()
