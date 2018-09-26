@@ -1,7 +1,12 @@
+"""
+    Contains the Animal superclass as well as Fish and Shark subclasses.
+    A factory class to generate objects of animals is contained as well.
+"""
+
 import random
 from settings import constants
 
-#                              N       S        W       E
+#  offsets                     N       S        W       E
 SURROUNDING_TILE_OFFSETS = [[0, -1], [0, 1], [-1, 0], [1, 0]]
 
 """
@@ -17,8 +22,8 @@ class Animal():
         self.surrounding_tiles = []
         self.age = 0
 
-    # Returns a move, corresponding to a cardinal direction, which is not in
-    # procided invalid_moves list. Returns a cardinal direction (i.e. [-1, 0])
+    # Returns a move, corresponding to a cardinal direction (offset), which is
+    # not in provided invalid_moves list. Returns an offset (i.e. [-1, 0])
     # rather than an absolute move.
     def _random_move(self, invalid_moves):
         moves = [x for x in SURROUNDING_TILE_OFFSETS if x not in invalid_moves]
@@ -71,6 +76,7 @@ class Fish(Animal):
 
     def __init__(self, coords):
         super().__init__(coords)
+        # TODO true age?
 
     # move returns what should be a valid move
     def move(self, invalid_moves):
@@ -105,13 +111,23 @@ class Fish(Animal):
     def formatted_string(self):
         return "Coords: ({}, {}) Age: {}".format(self.coords[0], self.coords[1], self.age)
 
+"""
+    Shark is an animal with the following functionality:
+
+    - They will move randomly in a cardinal direction unless there is a fish
+        near them, then they will move to and eat the fish.
+
+    - They will die if they don't eat before their starvation time
+"""
 class Shark(Animal):
     icon = constants["SHARK_ICON"]
 
     def __init__(self, coords):
         super().__init__(coords)
+        # true age doesn't reset, mostly for string representation
         self.true_age = 0
 
+    # move returns a potential move, to be confirmed by turn handler
     def move(self, invalid_moves):
         super()._update_surrounding_tiles()
         random_move = super()._random_move(invalid_moves)
@@ -121,6 +137,7 @@ class Shark(Animal):
         self.potential_move = super()._wrap_around(move)
         return self.potential_move
 
+    # move_to_fish returns a move to a fish if there is one around the shark.
     def move_to_fish(self, surrounding_fish):
         if len(surrounding_fish) < 1:
             return None
@@ -130,12 +147,14 @@ class Shark(Animal):
         return self.potential_move
 
     # TODO icon isn't always dissapearing
+    # check_death checks if the shark starves, returns true if it does
     def check_death(self):
         self.true_age += 1
         if self.age >= constants["SHARK_STEPS_TO_DIE"] + 1:
             return True
         return False
 
+    # confirm_move moves the shark if turn handler verifies the move
     def confirm_move(self, ate):
         if ate:
             self.age = 0
@@ -143,6 +162,7 @@ class Shark(Animal):
         self.potential_move = []
         super()._update_surrounding_tiles()
 
+    # returns a formatted string representing the shark
     def formatted_string(self):
         return "Coords: ({}, {}) Age: {}".format(self.coords[0], self.coords[1], self.true_age)
 
