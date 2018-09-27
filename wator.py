@@ -16,6 +16,12 @@ def command_line():
     com = CLI()
     com.welcome()
 
+def start_gui():
+    root = tk.Tk()
+    root.title("Config")
+    gooey = Config(root)
+    root.mainloop()
+
 if __name__ == "__main__":
     if "-cli" and "-gui" in sys.argv:
         print("Defaulting to cli")
@@ -26,8 +32,3 @@ if __name__ == "__main__":
         pass
     else:
         command_line()
-
-    # root = tk.Tk()
-    # root.title("Config")
-    # gooey = Config(root)
-    # root.mainloop()
