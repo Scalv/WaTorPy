@@ -1,9 +1,6 @@
 import random
-import tkinter as tk
-from tkinter import ttk
 import sys
 
-from gui import Config
 from animals import Fish, Shark, AnimalFactory
 from map import Map
 from settings import constants
@@ -15,12 +12,6 @@ from cli import CLI
 def command_line():
     com = CLI()
     com.welcome()
-
-def start_gui():
-    root = tk.Tk()
-    root.title("Config")
-    gooey = Config(root)
-    root.mainloop()
 
 if __name__ == "__main__":
     if "-cli" and "-gui" in sys.argv:

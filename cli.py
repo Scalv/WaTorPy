@@ -50,7 +50,7 @@ class CLI():
         elif choice.lower() == "q":
             return choice.lower()
         else:
-            # print something to correct them
+            # TODO print something to correct them
             self.step_menu()
 
     def step_type_menu(self):
