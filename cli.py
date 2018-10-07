@@ -51,7 +51,7 @@ class CLI():
             return choice.lower()
         else:
             # TODO print something to correct them
-            self.step_menu()
+            self.step_general_menu()
 
     def step_type_menu(self):
         print("Step Choices:\n (S)tep\n (A)uto Step\n (C)lear and Step")
