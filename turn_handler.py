@@ -46,9 +46,11 @@ class TurnHandler():
         return fish
 
     # Asks a shark for a valid move and confirms the move.
-    # If there are fish in surrounding tiles, the shark chooses one of those moves
-    # otherwise it moves randomly, or does not move if there are no valid moves.
+    # If there are fish in surrounding tiles, the shark chooses one of those
+    # as a move,
+    # Otherwise it moves randomly, or does not move if there are no valid moves.
     def _shark_move(self, shark, invalid, surrounding_fish):
+        # TODO change to if surrounding_fish:, write tests
         if len(surrounding_fish) > 0:
             move = shark.move_to_fish(surrounding_fish)
             if self.map.check_space_has_icon(move, constants["FISH_ICON"]):
